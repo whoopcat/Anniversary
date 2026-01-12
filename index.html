@@ -42,7 +42,6 @@
 
         /* --- HERO SECTION --- */
         #hero {
-            /* Changed to a generic romantic/flower background or keep the couple one */
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?q=80&w=2000');
             background-size: cover;
             background-position: center;
@@ -196,6 +195,48 @@
         .check-box li { margin-bottom: 20px; font-size: 1.2rem; list-style: none; }
         .check-box li::before { content: '🌷 '; }
 
+        /* --- NEW: BUCKET LIST STYLES --- */
+        #bucketlist-section { background: white; }
+        .bucket-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 30px;
+        }
+        .bucket-column {
+            background: var(--secondary);
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px solid #eee;
+        }
+        .bucket-column h3 {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .bucket-item {
+            display: flex;
+            align-items: center;
+            text-align: left;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        .bucket-item:hover { transform: translateX(5px); }
+        .bucket-item input {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
         /* --- MUSIC PLAYER --- */
         .player-card {
             background: white;
@@ -316,6 +357,46 @@
                 <li>Because you always smell nice, like vanilla and sugar.</li>
                 <li>Because 3 years with you felt like 3 minutes. ⏰</li>
             </ul>
+        </div>
+    </section>
+
+    <section id="bucketlist-section">
+        <h2 class="reveal">Our Future Bucket List 📝</h2>
+        <p class="reveal">Click them as we check them off in life!</p>
+        
+        <div class="bucket-grid reveal">
+            <div class="bucket-column">
+                <h3>👩‍🍳 Wydia</h3>
+                <label class="bucket-item"><input type="checkbox"> Open your own bakery</label>
+                <label class="bucket-item"><input type="checkbox"> Visit the tulip fields in Netherlands</label>
+                <label class="bucket-item"><input type="checkbox"> Master the Macaron Tower</label>
+                <label class="bucket-item"><input type="checkbox"> Adopt a 6th cat (Maybe?) 🐈</label>
+                <label class="bucket-item"><input type="checkbox"> Have a full Spa Weekend</label>
+                <label class="bucket-item"><input type="checkbox"> Get the perfect hair day</label>
+                <label class="bucket-item"><input type="checkbox"> Create a signature dessert</label>
+            </div>
+
+            <div class="bucket-column">
+                <h3>👱‍♂️ Subque</h3>
+                <label class="bucket-item"><input type="checkbox"> Graduate University 🎓</label>
+                <label class="bucket-item"><input type="checkbox"> Win a CTF Competition 💻</label>
+                <label class="bucket-item"><input type="checkbox"> Get a high paying job to spoil you</label>
+                <label class="bucket-item"><input type="checkbox"> Upgrade my motorcycle 🏍️</label>
+                <label class="bucket-item"><input type="checkbox"> Learn to bake 1 thing properly</label>
+                <label class="bucket-item"><input type="checkbox"> Build a smart home for the cats</label>
+                <label class="bucket-item"><input type="checkbox"> Be the best driver for our roadtrips</label>
+            </div>
+
+            <div class="bucket-column">
+                <h3>❤️ Us</h3>
+                <label class="bucket-item"><input type="checkbox"> Move into our own place 🏠</label>
+                <label class="bucket-item"><input type="checkbox"> Travel to Japan together 🇯🇵</label>
+                <label class="bucket-item"><input type="checkbox"> Binge watch a whole series in one day</label>
+                <label class="bucket-item"><input type="checkbox"> Go on a late night drive 🌃</label>
+                <label class="bucket-item"><input type="checkbox"> Cook a holiday dinner together</label>
+                <label class="bucket-item"><input type="checkbox"> Get Married 💍</label>
+                <label class="bucket-item"><input type="checkbox"> Grow old and grumpy together</label>
+            </div>
         </div>
     </section>
 
