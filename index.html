@@ -212,6 +212,38 @@
         .correct { background-color: #d4edda !important; border-color: #28a745 !important; }
         .wrong { background-color: #f8d7da !important; border-color: #dc3545 !important; }
 
+        /* --- COUPONS (VOUCHERS) --- */
+        #coupons { background: white; }
+        .coupon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 30px;
+        }
+        .coupon {
+            background: var(--secondary);
+            border: 2px dashed var(--dark);
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            transition: transform 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .coupon:hover { transform: scale(1.05); background: #fff; }
+        .coupon h3 { font-size: 1.5rem; margin: 10px 0; }
+        .coupon small { display: block; margin-top: 10px; color: #888; }
+        /* Little cutout circles for coupon look */
+        .coupon::before, .coupon::after {
+            content: ''; position: absolute; height: 30px; width: 30px;
+            background-color: white; border-radius: 50%; top: 50%; transform: translateY(-50%);
+        }
+        .coupon::before { left: -15px; }
+        .coupon::after { right: -15px; }
+
+
         /* --- GAME & CATS --- */
         #game-section { background: #222; color: white; }
         #game-container { width: 100%; max-width: 500px; height: 350px; background: #333; position: relative; border: 4px solid var(--primary); border-radius: 10px; overflow: hidden; margin-top: 20px; }
@@ -238,9 +270,18 @@
         .player-card { background: white; padding: 20px; border-radius: 50px; display: flex; align-items: center; gap: 20px; border: 2px solid var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; }
         .envelope-cover { background: #f8f9fa; border: 3px dashed var(--primary); padding: 60px; border-radius: 10px; }
         .seal-btn { background: var(--primary); color: white; padding: 15px 30px; border-radius: 50px; border: 4px double rgba(255,255,255,0.5); font-size: 1.2rem; cursor: pointer; margin-top: 20px; }
+        
+        /* --- ANIMATIONS --- */
         .reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        /* --- FLOATING BACKGROUND --- */
+        .bg-floater {
+            position: fixed; top: -10%; z-index: -1; opacity: 0.6; pointer-events: none;
+            animation: fall linear forwards;
+        }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
     </style>
 </head>
@@ -251,6 +292,15 @@
             <h1>Happy 3rd Anniversary, Wydia! 🌷</h1>
             <p>My Favorite Person & Curly Haired Queen 👸✨</p>
             <div style="font-size: 2rem; margin-top: 20px; animation: bounce 2s infinite;">⬇️</div>
+        </div>
+    </section>
+
+    <section id="mood-booster">
+        <div class="box-style" style="background: #fff0f0; border: none;">
+            <h3>Had a tough shift? 🏨</h3>
+            <p>Click the button below for a quick reminder.</p>
+            <div id="compliment-display" style="font-size: 1.5rem; font-family: 'Dancing Script'; min-height: 50px; color: var(--primary); margin: 20px 0;"></div>
+            <button class="quiz-btn" onclick="generateCompliment()">🥺 I need a boost</button>
         </div>
     </section>
 
@@ -361,6 +411,28 @@
         </div>
     </section>
 
+    <section id="coupons">
+        <h2 class="reveal">Anniversary Coupons 🎟️</h2>
+        <p class="reveal">Redeemable whenever our schedules align!</p>
+        <div class="coupon-grid reveal">
+            <div class="coupon">
+                <h3>💆‍♀️ Massage</h3>
+                <p>Good for one 30-minute back massage after a long shift.</p>
+                <small>Valid: Forever</small>
+            </div>
+            <div class="coupon">
+                <h3>🚙 Passenger Princess</h3>
+                <p>I drive, you choose the destination and the music.</p>
+                <small>Valid: Any Weekend</small>
+            </div>
+            <div class="coupon">
+                <h3>☕ Cafe Date</h3>
+                <p>I will pay for all your coffee and pastries for the day.</p>
+                <small>Valid: Always</small>
+            </div>
+        </div>
+    </section>
+
     <section id="game-section">
         <h2 class="reveal">Mission: Unlock the Cats & Gift Meaning 🐈</h2>
         <p class="reveal">The Royal Family is guarding the secret of your gifts! Collect <strong>10 Tulips</strong> to reveal them.</p>
@@ -388,11 +460,33 @@
         <div id="cats-unlocked">
             <h2>The Royal Family 👑</h2>
             <div class="cat-grid">
-                <div class="cat-card"><img src="Siti.jpg" class="cat-img"><p>Siti</p></div>
-                <div class="cat-card"><img src="Lepeh2.jpg" class="cat-img"><p>Lepeh</p></div>
-                <div class="cat-card"><img src="Abang2.jpg" class="cat-img"><p>Abang</p></div>
-                <div class="cat-card"><img src="Stocking.jpg" class="cat-img"><p>Stockin</p></div>
-                <div class="cat-card"><img src="Mimi2.jpg" class="cat-img"><p>Mimi</p></div>
+                <div class="cat-card">
+                    <img src="Siti.jpg" class="cat-img"><p style="font-weight:bold;">Siti</p>
+                    <p style="font-size:0.8rem; color:#666;">The Real Boss 👑</p>
+                </div>
+                <div class="cat-card">
+                    <img src="Lepeh2.jpg" class="cat-img"><p style="font-weight:bold;">Lepeh</p>
+                    <p style="font-size:0.8rem; color:#666;">Professional Sleeper 💤</p>
+                </div>
+                <div class="cat-card">
+                    <img src="Abang2.jpg" class="cat-img"><p style="font-weight:bold;">Abang</p>
+                    <p style="font-size:0.8rem; color:#666;">The Bodyguard 🛡️</p>
+                </div>
+                <div class="cat-card">
+                    <img src="Stocking.jpg" class="cat-img"><p style="font-weight:bold;">Stockin</p>
+                    <p style="font-size:0.8rem; color:#666;">Chaos Agent 🌪️</p>
+                </div>
+                <div class="cat-card">
+                    <img src="Mimi2.jpg" class="cat-img"><p style="font-weight:bold;">Mimi</p>
+                    <p style="font-size:0.8rem; color:#666;">The Princess 🎀</p>
+                </div>
+            </div>
+
+            <div class="box-style" style="margin-top: 50px; background: #fff0f0;">
+                <h3>Why I chose these gifts... 🎁</h3>
+                <p><strong>The Flowers:</strong> You know how real flowers die in a week? I wanted to give you something handmade that lasts forever, just like I want us to last forever.</p>
+                <hr style="border: 0; border-top: 1px dashed var(--primary); margin: 20px 0;">
+                <p><strong>The Dyson:</strong> You work so hard and your curly hair is beautiful. I wanted to give you something that makes your mornings easier and makes you feel pampered every day.</p>
             </div>
         </div>
     </section>
@@ -571,11 +665,43 @@
 
         function winGame() {
             gameActive = false;
-            alert("Unlocked! The Cats are revealed! 🐈");
+            alert("Unlocked! The secret meaning + The Cats are revealed! 🐈");
             document.getElementById('cats-locked').style.display = 'none';
             document.getElementById('cats-unlocked').style.display = 'block';
             document.getElementById('game-container').innerHTML = "<h2 style='text-align:center; margin-top:100px;'>YOU WON! 🎉</h2>";
         }
+
+        // --- COMPLIMENT GENERATOR ---
+        const compliments = [
+            "You are the hardest worker I know! 💪",
+            "I am so proud of you.",
+            "Your curly hair looks amazing today (I bet).",
+            "The 5 cats miss you (and so do I).",
+            "You handled today like a boss.",
+            "I love you more than pizza.",
+            "Take a deep breath. You got this."
+        ];
+
+        function generateCompliment() {
+            const random = Math.floor(Math.random() * compliments.length);
+            document.getElementById("compliment-display").innerText = compliments[random];
+        }
+
+        // --- FLOATING BACKGROUND ITEMS ---
+        function createFloater() {
+            const floater = document.createElement("div");
+            floater.classList.add("bg-floater");
+            const shapes = ["❤️", "🌷", "✨", "🐈"]; 
+            floater.innerText = shapes[Math.floor(Math.random() * shapes.length)];
+            
+            floater.style.left = Math.random() * 100 + "vw";
+            floater.style.animationDuration = Math.random() * 5 + 5 + "s"; 
+            floater.style.fontSize = Math.random() * 20 + 20 + "px";
+            
+            document.body.appendChild(floater);
+            setTimeout(() => { floater.remove(); }, 10000);
+        }
+        setInterval(createFloater, 800);
     </script>
 </body>
 </html>
