@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary Wydia! ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CORE STYLES --- */
+        :root {
+            --primary: #D2042D; /* Cherry Red */
+            --secondary: #fff5f5; /* Very light pink/white */
+            --accent: #E85D75; /* Softer Red */
+            --green: #4caf50; /* Tulip Stem Green */
+            --dark: #2c2c2c;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--secondary);
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary);
+        }
+
+        section {
+            padding: 80px 20px;
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            /* Changed to a generic romantic/flower background or keep the couple one */
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-box {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid var(--primary);
+            backdrop-filter: blur(5px);
+            max-width: 800px;
+        }
+
+        #hero h1 {
+            font-size: 4rem;
+            margin: 0;
+            color: #fff;
+            text-shadow: 0 0 15px var(--primary);
+        }
+        
+        #hero p {
+             font-size: 1.5rem;
+             color: #fff;
+             margin-top: 10px;
+             font-weight: bold;
+        }
+
+        /* --- SHARED STYLES --- */
+        .box-style {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 700px;
+            margin: 20px auto;
+            border-top: 5px solid var(--primary);
+        }
+
+        /* --- THE GAME SECTION --- */
+        #game-section {
+            background: #222;
+            color: white;
+            overflow: hidden;
+        }
+        
+        #game-container {
+            width: 100%;
+            max-width: 500px;
+            height: 350px;
+            background: #333;
+            position: relative;
+            border: 4px solid var(--primary);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        #player {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            line-height: 50px;
+            transition: left 0.1s linear;
+        }
+
+        .falling-object {
+            position: absolute;
+            font-size: 30px;
+            top: -40px;
+        }
+
+        .game-btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* --- CATS (HIDDEN INITIALLY) --- */
+        #cats-locked {
+            display: block;
+        }
+        #cats-unlocked {
+            display: none; /* Hidden until game is won */
+            animation: fadeIn 2s;
+        }
+        .cat-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .cat-card {
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            width: 160px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .cat-card:hover { transform: translateY(-10px); }
+        .cat-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* --- CHECKLIST (REASONS) --- */
+        #checklist { background: var(--primary); color: white; }
+        #checklist h2 { color: white; }
+        .check-box {
+            text-align: left;
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 700px;
+        }
+        .check-box li { margin-bottom: 20px; font-size: 1.2rem; list-style: none; }
+        .check-box li::before { content: '🌷 '; }
+
+        /* --- MUSIC PLAYER --- */
+        .player-card {
+            background: white;
+            padding: 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .player-card:hover { transform: scale(1.05); }
+
+        /* --- LOCKED LETTER --- */
+        .envelope-cover {
+            background: #f8f9fa;
+            border: 3px dashed var(--primary);
+            padding: 60px;
+            border-radius: 10px;
+        }
+        .seal-btn {
+            background: var(--primary);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 4px double rgba(255,255,255,0.5);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    </style>
+</head>
+<body>
+
+    <section id="hero">
+        <div class="hero-box reveal">
+            <h1>Happy 3rd Anniversary, Wydia! 🌷</h1>
+            <p>My Favorite Person & Curly Haired Queen 👸✨</p>
+            <div style="font-size: 2rem; margin-top: 20px; animation: bounce 2s infinite;">⬇️</div>
+        </div>
+    </section>
+
+    <section style="padding: 20px;">
+        <audio id="bg-music" loop>
+            <source src="music.mp3" type="audio/mp3">
+        </audio>
+        
+        <div class="player-card reveal" onclick="toggleMusic()">
+            <div style="font-size: 2rem; color: var(--primary);">🎵</div>
+            <div style="text-align: left;">
+                <h3 style="margin: 0; font-size: 1.2rem;">Click to Play Our Song</h3>
+                <p style="margin: 0; font-size: 0.9rem; color: #666;">(Turn up the volume!)</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="timer-section">
+        <h2 class="reveal">We have been together for... ⏳</h2>
+        <div class="box-style reveal" id="timer" style="font-size: 1.5rem; font-weight: bold;">Calculating...</div>
+        <p class="reveal">Through university stress and busy shifts, I've loved every second.</p>
+    </section>
+
+    <section id="game-section">
+        <h2 class="reveal">Mission: Unlock the Cats 🐈</h2>
+        <p class="reveal">The Royal Family is hiding! Collect <strong>10 Tulips</strong> to reveal their photos.</p>
+        
+        <div id="game-container" class="reveal">
+            <div id="score-board" style="position: absolute; top: 10px; left: 10px; color: white; font-weight: bold; font-size: 20px;">Tulips: 0/10</div>
+            <div id="game-message" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 100%;">
+                <button class="game-btn" onclick="startGame()">Start Game</button>
+            </div>
+            <div id="player" style="display: none;">👱‍♂️</div>
+        </div>
+
+        <div class="controls reveal">
+            <button class="control-btn" onmousedown="moveLeft()" onmouseup="stopMove()" ontouchstart="moveLeft()" ontouchend="stopMove()">⬅️</button>
+            <button class="control-btn" onmousedown="moveRight()" onmouseup="stopMove()" ontouchstart="moveRight()" ontouchend="stopMove()">➡️</button>
+        </div>
+    </section>
+
+    <section id="cats">
+        <div id="cats-locked">
+            <h2 style="color: #aaa;">🔒 Cats Locked</h2>
+            <p>Beat the game above to see the babies.</p>
+        </div>
+
+        <div id="cats-unlocked">
+            <h2>The Royal Family 👑</h2>
+            <p>You did it! Here are the 5 rulers of the house.</p>
+            <div class="cat-grid">
+                <div class="cat-card"><img src="cat1.jpg" class="cat-img"><p>Name 1</p></div>
+                <div class="cat-card"><img src="cat2.jpg" class="cat-img"><p>Name 2</p></div>
+                <div class="cat-card"><img src="cat3.jpg" class="cat-img"><p>Name 3</p></div>
+                <div class="cat-card"><img src="cat4.jpg" class="cat-img"><p>Name 4</p></div>
+                <div class="cat-card"><img src="cat5.jpg" class="cat-img"><p>Name 5</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="checklist">
+        <h2 class="reveal">Why I Love You ✨</h2>
+        <div class="check-box reveal">
+            <ul>
+                <li>Because you have the most beautiful curly hair I've ever seen.</li>
+                <li>Because you make me feel safe when university gets overwhelming.</li>
+                <li>Because you have a soft spot for every stray animal we pass. 🐱</li>
+                <li>Because even when you are tired from work, you still ask me how my day was.</li>
+                <li>Because of your laugh (it's my favorite sound).</li>
+                <li>Because you are my best friend, not just my girlfriend.</li>
+                <li>Because you always smell nice, like vanilla and sugar.</li>
+                <li>Because 3 years with you felt like 3 minutes. ⏰</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="gifts">
+        <h2 class="reveal">I Have a Surprise... 🎁</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;" class="reveal">
+            <div class="box-style" style="width: 250px;">
+                <h3>Gift Hint #1</h3>
+                <div style="font-size: 4rem; margin: 20px 0;">🧶🌷</div>
+                <p><strong>Handcrafted Nature.</strong><br>A garden of tulips that never needs water, made by my own hands.</p>
+            </div>
+
+            <div class="box-style" style="width: 250px;">
+                <h3>Gift Hint #2</h3>
+                <div style="font-size: 4rem; margin: 20px 0;">💨✨</div>
+                <p><strong>The Power of Air.</strong><br>Something high-tech to help you get ready in record time.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="letter">
+        <div style="position: relative; max-width: 700px;" id="letter-wrapper">
+            
+            <div class="envelope-cover">
+                <div style="font-size: 4rem; color: var(--primary);">🔒</div>
+                <h3>Letter to Wydia</h3>
+                <p>Warning: Do not open until you hold the gifts in your hands.</p>
+                <button class="seal-btn" onclick="openLetter()">Break Seal & Read</button>
+            </div>
+
+            <div class="box-style" id="letter-content" style="display:none; text-align: left; line-height: 2;">
+                <div style="border: 2px solid var(--primary); color: var(--primary); display: inline-block; padding: 5px; transform: rotate(15deg); float: right;">POSTAGE PAID</div>
+                <h2>Dear Wydia, ✍️</h2>
+                <p>
+                    Happy 3rd Anniversary! I wanted to create something special that you can keep forever on your phone, even when we aren't together.
+                </p>
+                <p>
+                    These past three years have been an adventure. Watching you work so hard at Pan Pac, taking care of the cats, and still finding time to be the most amazing girlfriend is inspiring. I know University keeps me busy, but you are always on my mind. 🧠❤️
+                </p>
+                <p>
+                    I hope you enjoy the <strong>Dyson</strong> (you deserve the best!) and my attempt at arts and crafts with the <strong>flowers</strong>. I wanted to give you flowers that would last as long as my love for you (forever). 🌹
+                </p>
+                <p>
+                    Thank you for being my partner, my best friend, and my favorite chef. I can't wait until we don't have to say goodbye at the end of the day.
+                </p>
+                <br>
+                <p><strong>Love always,</strong><br>Meowzafar Subque 👱‍♂️</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- CONFIGURATION ---
+        const startDate = new Date("January 1, 2023"); 
+
+        // --- TIMER LOGIC ---
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+            document.getElementById("timer").innerHTML = `${days} Days, ${hours} Hours, ${minutes} Minutes, ${seconds} Seconds`;
+        }
+        setInterval(updateTimer, 1000);
+
+        // --- LETTER LOGIC ---
+        function openLetter() {
+            document.querySelector('.envelope-cover').style.display = 'none';
+            document.getElementById('letter-content').style.display = 'block';
+        }
+
+        // --- MUSIC LOGIC ---
+        function toggleMusic() {
+            var audio = document.getElementById("bg-music");
+            if (audio.paused) {
+                audio.play();
+                alert("Playing music! 🎵");
+            } else {
+                audio.pause();
+            }
+        }
+
+        // --- SCROLL REVEAL ---
+        window.addEventListener("scroll", () => {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                if (reveals[i].getBoundingClientRect().top < window.innerHeight - 100) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        });
+
+        // --- GAME LOGIC (CATCH TULIPS) ---
+        let gameActive = false;
+        let score = 0;
+        let playerPos = 50; // Percentage
+        let moveInterval;
+        const player = document.getElementById('player');
+        
+        function startGame() {
+            if(gameActive) return;
+            gameActive = true;
+            score = 0;
+            document.getElementById('game-message').style.display = 'none';
+            document.getElementById('player').style.display = 'block';
+            document.getElementById('score-board').innerText = "Tulips: 0/10";
+            spawnTulip();
+        }
+
+        function moveLeft() {
+            moveInterval = setInterval(() => {
+                if (playerPos > 0) playerPos -= 5;
+                player.style.left = playerPos + "%";
+            }, 50);
+        }
+
+        function moveRight() {
+            moveInterval = setInterval(() => {
+                if (playerPos < 90) playerPos += 5;
+                player.style.left = playerPos + "%";
+            }, 50);
+        }
+
+        function stopMove() {
+            clearInterval(moveInterval);
+        }
+
+        function spawnTulip() {
+            if (!gameActive) return;
+            const tulip = document.createElement('div');
+            tulip.innerHTML = '🌷';
+            tulip.classList.add('falling-object');
+            tulip.style.left = Math.random() * 90 + "%";
+            document.getElementById('game-container').appendChild(tulip);
+
+            let topPos = -40;
+            let fallInterval = setInterval(() => {
+                if (!gameActive) { clearInterval(fallInterval); tulip.remove(); return; }
+                topPos += 5;
+                tulip.style.top = topPos + "px";
+
+                // Check collision
+                if (topPos > 300 && topPos < 350) {
+                    let tulipLeft = parseInt(tulip.style.left);
+                    if (Math.abs(tulipLeft - playerPos) < 10) {
+                        score++;
+                        document.getElementById('score-board').innerText = `Tulips: ${score}/10`;
+                        tulip.remove();
+                        clearInterval(fallInterval);
+                        if (score >= 10) winGame();
+                    }
+                }
+
+                if (topPos > 350) {
+                    tulip.remove();
+                    clearInterval(fallInterval);
+                }
+            }, 50);
+
+            if (score < 10) setTimeout(spawnTulip, 1000);
+        }
+
+        function winGame() {
+            gameActive = false;
+            alert("You caught enough tulips! The cats are unlocked! 🐈");
+            document.getElementById('cats-locked').style.display = 'none';
+            document.getElementById('cats-unlocked').style.display = 'block';
+            document.getElementById('game-container').innerHTML = "<h2 style='text-align:center; margin-top:100px;'>YOU WON! 🎉</h2>";
+        }
+    </script>
+</body>
+</html>
